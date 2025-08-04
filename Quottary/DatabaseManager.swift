@@ -170,4 +170,46 @@ class DatabaseManager: ObservableObject {
     deinit {
         sqlite3_close(db)
     }
+
+
+    func updateQuote(_ quote: Quote) -> Bool {
+        let updateSQL = """
+            UPDATE quotes
+            SET text = ?, author = ?
+            WHERE id = ?
+        """
+
+        var statement: OpaquePointer?
+
+        guard sqlite3_prepare_v2(db, updateSQL, -1, &statement, nil) == SQLITE_OK else {
+            print("Error preparing update statement")
+            return false
+        }
+
+        defer {
+            sqlite3_finalize(statement)
+        }
+
+        // Use the same UTF-8 handling as insertQuote
+        let textData = quote.text.data(using: .utf8)!
+        let authorData = quote.author.data(using: .utf8)!
+
+        textData.withUnsafeBytes { textBytes in
+            sqlite3_bind_text(statement, 1, textBytes.bindMemory(to: CChar.self).baseAddress, Int32(textData.count), unsafeBitCast(-1, to: sqlite3_destructor_type.self))
+        }
+
+        authorData.withUnsafeBytes { authorBytes in
+            sqlite3_bind_text(statement, 2, authorBytes.bindMemory(to: CChar.self).baseAddress, Int32(authorData.count), unsafeBitCast(-1, to: sqlite3_destructor_type.self))
+        }
+
+        sqlite3_bind_int(statement, 3, Int32(quote.id))
+
+        guard sqlite3_step(statement) == SQLITE_DONE else {
+            print("Error executing update statement")
+            return false
+        }
+
+        print("Quote updated successfully")
+        return true
+    }
 }

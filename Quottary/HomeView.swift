@@ -106,11 +106,11 @@ struct HomeView: View {
         .onAppear {
             loadQuoteOfTheDay()
         }
-        .alert("Quote Status", isPresented: $showingAlert) {
-            Button("OK", role: .cancel) { }
-        } message: {
-            Text(alertMessage)
-        }
+//        .alert("Quote Status", isPresented: $showingAlert) {
+//            Button("OK", role: .cancel) { }
+//        } message: {
+//            Text(alertMessage)
+//        }
     }
     
     private func saveQuote() {

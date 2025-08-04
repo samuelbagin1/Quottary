@@ -7,4 +7,6 @@ struct QuottaryApp: App {
             ContentView()
         }
     }
+
+
 }
