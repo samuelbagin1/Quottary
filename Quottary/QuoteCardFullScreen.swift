@@ -17,13 +17,13 @@ struct QuoteCardFullScreen: View {
                     Text("\"\(quote.text)\"")
                         .font(.quoteText)
                         .foregroundColor(Color("blackColor"))
-                        .multilineTextAlignment(.leading)
+                        .multilineTextAlignment(.center)
 
                     Text(quote.author)
                         .font(.authorText)
                         .foregroundColor(Color("grayColor"))
                 }
-            }
+            }.padding(20)
 
             VStack {
                 Spacer()

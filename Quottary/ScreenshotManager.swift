@@ -67,45 +67,45 @@ struct QuoteScreenshotView: View {
 
     var body: some View {
         ZStack {
-            // Background
-            Color("whiteColor")
 
             VStack(spacing: 6) {
                 Spacer()
 
-                // Quote text in the middle
-                Text("\"\(quote.text)\"")
-                    .font(.quoteText)
-                    .fontWeight(.medium)
-                    .foregroundColor(Color("blackColor"))
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .fixedSize()
+                VStack(spacing: 12) {
 
-                // Author below the quote
-                Text(quote.author)
-                    .font(.authorText)
-                    .foregroundColor(Color("grayColor"))
-                    .multilineTextAlignment(.center)
+                    Text("\"\(quote.text)\"")
+                        .font(.instrumentSerif(size: 40, italic: true))
+                        .foregroundColor(Color("blackColor"))
+                        .multilineTextAlignment(.leading)
+
+                    HStack {
+                        Spacer()
+                        Text("— \(quote.author)")
+                            .font(.instrumentSerif(size: 35, italic: true))
+                            .foregroundColor(Color("grayColor"))
+                    }
+
+                }.padding(60)
 
                 Spacer()
 
                 // App title in bottom left corner
                 HStack {
                     Text("Quottary")
-                        .font(.instrumentSerif(size: 12, italic: false))
+                        .font(.instrumentSerif(size: 30, italic: false))
                         .foregroundColor(Color("grayColor"))
 
                     Spacer()
-                }
+                }.padding(10)
             }
-            .padding(12)
         }
-        .frame(width: 400, height: 500)
+        .frame(width: 1080, height: 1350)
+        .padding(30)
+        .background(Color("whiteColor"))
     }
 }
 
 
 #Preview {
-    QuoteScreenshotView(quote: Quote(id: 122, text: "The only way to do great work is to love what you do.", author: "Steve Jobs", dateCreated: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 15, hour: 10, minute: 30))!))
+    QuoteScreenshotView(quote: Quote(id: 122, text: "The only way to do great work is to love what you do. aaaaaaaaaaaaaaaaa", author: "Steve Jobs", dateCreated: Calendar.current.date(from: DateComponents(year: 2024, month: 7, day: 15, hour: 10, minute: 30))!))
 }
